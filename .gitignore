@@ -2,7 +2,9 @@
 *.so
 *.dylib
 simple-rest-api-server-fan-in
+go-app
 main
+app
 
 # Test binary, built with `go test -c`
 *.test
