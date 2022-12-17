@@ -10,28 +10,31 @@ import (
 	"time"
 )
 
-// API incapsulates necessary dependencies for running server
+// API incapsulates necessary dependencies to run server
 type API struct {
 	config      models.Config
 	healthHandler *handlers.HealthHandler
+	dataHandler  *handlers.DataHandler
 
 	requestWriter io.Writer
 }
 
-// NewAPI creates API struct with dependencies
+// NewAPI creates the new API instance with dependencies
 func NewAPI(
 	config models.Config,
 	health *handlers.HealthHandler,
+	dataHandler *handlers.DataHandler,
 
 ) *API {
 
 	return &API{
 		config:      config,
 		healthHandler: health,
+		dataHandler:  dataHandler,
 	}
 }
 
-// Run starts an API server
+// Run starts the Rest-API server
 func (a *API) Run() {
 	r := mux.NewRouter()
 
@@ -43,8 +46,12 @@ func (a *API) Run() {
 
 }
 
+// Middleware
 func (a API) registerRoutes(r *mux.Router) {
-	// Endpoints, handler functions and HTTP method
+
 	r.HandleFunc("/health", a.healthHandler.HealthCheck).Methods("GET")
+
+	api := r.PathPrefix("/api/v1").Subrouter()
+	api.HandleFunc("/data",  a.dataHandler.Get).Methods("GET")
 
 }

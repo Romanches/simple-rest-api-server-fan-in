@@ -1,20 +1,21 @@
-package main
+package mock_server
 
 import (
 	"encoding/json"
+	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/models"
 	"github.com/gorilla/mux"
 	"net/http"
 )
 
 type ResponseData struct {
-	Data []Data `json:"data"`
+	Data []models.Data `json:"data"`
 }
 
-type Data struct {
-	Url            string  `json:"url"`
-	Views          int64   `json:"views"`
-	RelevanceScore float64 `json:"relevanceScore"`
-}
+//type Data struct {
+//	Url            string  `json:"url"`
+//	Views          int64   `json:"views"`
+//	RelevanceScore float64 `json:"relevanceScore"`
+//}
 
 func main() {
 	r := mux.NewRouter()
@@ -34,7 +35,7 @@ func GetDuckDuckGoAssignment(w http.ResponseWriter, r *http.Request) {
 	var response ResponseData
 
 	//Retrieve data
-	data := mockDuckduckgo()
+	data := MockDuckduckgo()
 
 	//assign person details to response
 	response.Data = data
@@ -55,9 +56,9 @@ func GetDuckDuckGoAssignment(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonResponse)
 }
 
-func mockDuckduckgo() []Data {
-	var dataFromResource []Data
-	var data Data
+func MockDuckduckgo() []models.Data {
+	var dataFromResource []models.Data
+	var data models.Data
 
 	data.Url = "www.yahoo.com/abc6"
 	data.Views = 6000
@@ -93,7 +94,7 @@ func GetGoogleAssignment(w http.ResponseWriter, r *http.Request) {
 	var response ResponseData
 
 	//Retrieve data
-	data := mockGoogle()
+	data := MockGoogle()
 
 	//assign person details to response
 	response.Data = data
@@ -115,33 +116,33 @@ func GetGoogleAssignment(w http.ResponseWriter, r *http.Request) {
 }
 
 
-func mockGoogle() []Data {
-	var dataFromResource []Data
-	var data Data
+func MockGoogle() []models.Data {
+	var dataFromResource []models.Data
+	var data models.Data
 
-	data.Url = "www.yahoo.com/abc6"
-	data.Views = 6000
-	data.RelevanceScore = 0.6
+	data.Url = "www.example.com/abc1"
+	data.Views = 1000
+	data.RelevanceScore = 0.1
 	dataFromResource = append(dataFromResource, data)
 
-	data.Url = "www.yahoo.com/abc7"
-	data.Views = 7000
-	data.RelevanceScore = 0.7
+	data.Url = "www.example.com/abc2"
+	data.Views = 2000
+	data.RelevanceScore = 0.2
 	dataFromResource = append(dataFromResource, data)
 
-	data.Url = "www.yahoo.com/abc8"
-	data.Views = 8000
-	data.RelevanceScore = 0.8
+	data.Url = "www.example.com/abc4"
+	data.Views = 4000
+	data.RelevanceScore = 0.4
 	dataFromResource = append(dataFromResource, data)
 
-	data.Url = "www.yahoo.com/abc9"
-	data.Views = 9000
-	data.RelevanceScore = 0.9
+	data.Url = "www.example.com/abc3"
+	data.Views = 3000
+	data.RelevanceScore = 0.3
 	dataFromResource = append(dataFromResource, data)
 
-	data.Url = "www.yahoo.com/abc10"
-	data.Views = 10000
-	data.RelevanceScore = 1.0
+	data.Url = "www.example.com/abc5"
+	data.Views = 5000
+	data.RelevanceScore = 0.5
 	dataFromResource = append(dataFromResource, data)
 
 	return dataFromResource
@@ -153,7 +154,7 @@ func GetWikipediaAssignment(w http.ResponseWriter, r *http.Request) {
 	var response ResponseData
 
 	//Retrieve data
-	data := mockWikipedia()
+	data := MockWikipedia()
 
 	//assign person details to response
 	response.Data = data
@@ -175,33 +176,33 @@ func GetWikipediaAssignment(w http.ResponseWriter, r *http.Request) {
 }
 
 
-func mockWikipedia() []Data {
-	var dataFromResource []Data
-	var data Data
+func MockWikipedia() []models.Data {
+	var dataFromResource []models.Data
+	var data models.Data
 
-	data.Url = "www.yahoo.com/abc6"
-	data.Views = 6000
-	data.RelevanceScore = 0.6
+	data.Url = "www.wikipedia.com/abc1"
+	data.Views = 11000
+	data.RelevanceScore = 0.1
 	dataFromResource = append(dataFromResource, data)
 
-	data.Url = "www.yahoo.com/abc7"
-	data.Views = 7000
-	data.RelevanceScore = 0.7
+	data.Url = "www.wikipedia.com/abc2"
+	data.Views = 12000
+	data.RelevanceScore = 0.2
 	dataFromResource = append(dataFromResource, data)
 
-	data.Url = "www.yahoo.com/abc8"
-	data.Views = 8000
-	data.RelevanceScore = 0.8
+	data.Url = "www.wikipedia.com/abc4"
+	data.Views = 13000
+	data.RelevanceScore = 0.4
 	dataFromResource = append(dataFromResource, data)
 
-	data.Url = "www.yahoo.com/abc9"
-	data.Views = 9000
-	data.RelevanceScore = 0.9
+	data.Url = "www.wikipedia.com/abc3"
+	data.Views = 14000
+	data.RelevanceScore = 0.3
 	dataFromResource = append(dataFromResource, data)
 
-	data.Url = "www.yahoo.com/abc10"
-	data.Views = 10000
-	data.RelevanceScore = 1.0
+	data.Url = "www.wikipedia.com/abc5"
+	data.Views = 15000
+	data.RelevanceScore = 0.5
 	dataFromResource = append(dataFromResource, data)
 
 	return dataFromResource

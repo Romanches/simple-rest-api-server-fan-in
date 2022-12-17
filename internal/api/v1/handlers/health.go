@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"fmt"
+	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/helpers/render"
 	"net/http"
 )
 
@@ -21,5 +21,7 @@ func (h *HealthHandler) HealthCheck(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	//update response writer
-	fmt.Fprintf(w, "Ok!")
+	//fmt.Fprintf(w, "Ok!")
+
+	render.OK(w, "Ok!")
 }

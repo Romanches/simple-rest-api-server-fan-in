@@ -9,6 +9,8 @@ type (
 		// ListenAddr defines HTTP section of the API server configuration
 		ListenAddr string      `yaml:"listen_addr"`
 
+		// The list of URLs
+		Resources  []string    `yaml:"resources"`
 	}
 )
 
