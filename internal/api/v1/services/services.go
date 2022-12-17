@@ -7,6 +7,6 @@ import (
 
 // Data is the service-layer interface that describes "/views" endpoint
 type Data interface {
-	GetData(context.Context, models.QueryParams) ([]models.Data, error)
+	GetData(context.Context, models.QueryParams) (models.ResponseData, error)
 }
 

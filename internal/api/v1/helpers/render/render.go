@@ -52,13 +52,14 @@ func respondError(w http.ResponseWriter, code int, err error) {
 }
 
 func respondSuccess(w http.ResponseWriter, code int, data interface{}) {
-	var r BodySuccess
-	r.Status = statusSuccess
-	if data != nil {
-		r.Data = data
-	}
+	//var r BodySuccess
+	//r.Status = statusSuccess
+	//if data != nil {
+	//	r.Data = data
+	//}
 
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(code)
-	_ = json.NewEncoder(w).Encode(r)
+	//_ = json.NewEncoder(w).Encode(r)
+	_ = json.NewEncoder(w).Encode(data)
 }

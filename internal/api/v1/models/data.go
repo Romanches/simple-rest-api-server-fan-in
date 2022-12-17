@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-type ResponseData struct {
-	Data []Data `json:"data"`
+type ClientResponseData struct {
+	Data  []Data `json:"data"`
 }
 
 type Data struct {
@@ -16,9 +16,14 @@ type Data struct {
 	RelevanceScore float64 `json:"relevanceScore"`
 }
 
+type ResponseData struct {
+	Data  []Data `json:"data"`
+	Count int    `json:"count"`
+}
+
 type QueryParams struct {
-	SortKey          string
-	Limit            int
+	SortKey string
+	Limit   int
 }
 
 func (p *QueryParams) Validate() error {
@@ -59,4 +64,3 @@ func caseInsensitiveFieldByName(v reflect.Value, name string) reflect.Value {
 		return strings.ToLower(n) == name
 	})
 }
-

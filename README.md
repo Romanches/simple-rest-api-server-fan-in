@@ -1,6 +1,10 @@
 # simple-rest-api-server-fan-in
 Simple rest-api server with fan-in collector/combiner.
 
+Our application consists of three layers of abstractions:
+1. Handler - transport layer
+2. Service - business logic layer
+3. Repository - data source (db, external resources or third party data providers)
 
 
 ### Project structure

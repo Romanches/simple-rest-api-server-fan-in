@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api"
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/handlers"
-	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/helpers/restclient"
+	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/helpers/rest"
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/models"
 	rData "github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/repository/data"
 	sData "github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/services/data"
@@ -29,7 +29,7 @@ func main() {
 	healthHandler := handlers.NewHealthHandler()
 
 	// It should be DB connector, but in our application we need http-client to get data from third-party resources
-	httpClient := restclient.NewHttpClient()
+	httpClient := rest.NewHttpClient()
 
 	// Repository instance for /data endpoint
 	dataRepository := rData.NewRepository(httpClient, 60 * time.Second)
