@@ -6,26 +6,32 @@ import (
 	"strings"
 )
 
+// Represents the structure of data received from external platforms
 type ClientResponseData struct {
+	// The list of Items
 	Data  []Data `json:"data"`
 }
 
+// Item
 type Data struct {
 	Url            string  `json:"url"`
 	Views          int64   `json:"views"`
 	RelevanceScore float64 `json:"relevanceScore"`
 }
 
+// Response model for GET:/data endpoint
 type ResponseData struct {
 	Data  []Data `json:"data"`
 	Count int    `json:"count"`
 }
 
+// Request parameters for GET:/data endpoint
 type QueryParams struct {
 	SortKey string
 	Limit   int
 }
 
+// Request parameters validator
 func (p *QueryParams) Validate() error {
 	var errs string
 

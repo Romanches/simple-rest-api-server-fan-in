@@ -4,43 +4,33 @@ import (
 	"context"
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/models"
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/repository"
-	"log"
 )
 
+// Service
 type DataService struct {
-	resources []string
+	resources      []string
 	dataRepository repository.Data
 }
 
 // NewDataService creates a new instance of Data service
 func NewDataService(resources []string, dataRepo repository.Data) *DataService {
 	return &DataService{
-		resources: resources,
+		resources:      resources,
 		dataRepository: dataRepo,
 	}
 }
 
-
+// Service method for /data endpoint
 func (s DataService) GetData(ctx context.Context, params models.QueryParams) (result models.ResponseData, err error) {
 	dataSet := []models.Data{}
 	result = models.ResponseData{
 		Data: []models.Data{},
 	}
 
-	// Poll all resources from the list
-	for _, url := range s.resources {
+	// Call repository instance to get statistic about web-links views and their relevance-score
+	dataSet, err = s.dataRepository.GetStatistic(ctx, s.resources)
+	if err != nil {
 
-		// Call repository
-		repoResponse, err := s.dataRepository.GetStatistic(ctx, url)
-		if err != nil {
-			//return result, err
-			log.Println("Error:", err)
-			continue
-		}
-
-		if len(repoResponse.Data) > 0 {
-			dataSet = append(dataSet, repoResponse.Data...)
-		}
 	}
 
 	// If we have no data

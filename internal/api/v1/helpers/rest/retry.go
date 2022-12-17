@@ -2,6 +2,7 @@ package rest
 
 import (
 	"context"
+	"errors"
 	"log"
 	"net/http"
 	"time"
@@ -19,19 +20,23 @@ var backoffSchedule = []time.Duration{
 	//30 * time.Second,
 }
 
+func GetWithRetryAsync(ctx context.Context, c *http.Client, method, endpoint string, into interface{}) {
+	GetWithRetry(ctx, c, method, endpoint, into)
+}
+
 // GetWithRetry makes pauses and retries requests for unavailable endpoints according to the schedule
-func GetWithRetry(ctx context.Context, c *http.Client, method, endpoint string, into interface{}) error {
+func GetWithRetry(ctx context.Context, c *http.Client, method, url string, into interface{}) error {
 	var err error
 
 	for _, backoff := range backoffSchedule {
 
-		err = SendGetRequest(ctx, c, method, endpoint, into)
+		err = SendGetRequest(ctx, c, method, url, into)
 		// Success connection
 		if err == nil {
 			break
 		}
 
-		log.Printf("Request error: %+v\n. Retrying in %v\n", err, backoff)
+		log.Printf("Request error: %s %+v. Retrying in %v\n", url, err, backoff)
 
 		// Wait before try again
 		time.Sleep(backoff)
@@ -39,10 +44,9 @@ func GetWithRetry(ctx context.Context, c *http.Client, method, endpoint string, 
 
 	// All retries failed
 	if err != nil {
-		return err
+		return errors.New(url + " " + err.Error())
 	}
 
 	// Success
 	return nil
 }
-

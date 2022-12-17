@@ -5,7 +5,7 @@ import (
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/models"
 )
 
-// Data is the interface that wraps work with database or external data source
+// Data is the interface that wraps work with repository
 type Data interface {
-	GetStatistic(ctx context.Context, url string) (models.ClientResponseData, error)
+	GetStatistic(ctx context.Context, urls []string) ([]models.Data, error)
 }

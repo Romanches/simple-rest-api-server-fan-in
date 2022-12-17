@@ -5,55 +5,63 @@ import (
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/helpers/rest"
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/models"
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/repository"
+	"log"
 	"net/http"
-	"time"
 )
 
 // Repository describes this layer parameters
 type Repository struct {
 	// Isolate HTTP-client and make it available from this layer only
 	httpClient *http.Client
-
-	// TODO: Do we need it here?
-	timeout time.Duration
 }
 
 // NewRepository creates new instance of Repository
-func NewRepository(httpClient *http.Client, timeout time.Duration) repository.Data {
+func NewRepository(httpClient *http.Client) repository.Data {
 	return &Repository{
 		httpClient: httpClient,
-		timeout: timeout,
 	}
 }
 
 // GetStatistic gets data from remote sources
-func (r *Repository) GetStatistic(ctx context.Context, url string) (data models.ClientResponseData, err error) {
-	data = models.ClientResponseData{}
+func (r *Repository) GetStatistic(ctx context.Context, urls []string) (dataSet []models.Data, err error) {
+	// Expected response from HTTP client
+	responseData := models.ClientResponseData{}
 
-	// TODO: Do we need it here?
-	ctx, cancel := context.WithTimeout(ctx, r.timeout)
+	// Channel to read data from goroutines
+	chOut := make(chan models.ClientResponseData, 1)
 
-	defer cancel()
+	// Poll all resources from the list
+	for _, url := range urls {
 
-	// Send http request to get data from remote source
-	//err = restclient.SendGetRequest(context, r.httpClient, http.MethodGet, url, &data)
-	err = rest.GetWithRetry(ctx, r.httpClient, http.MethodGet, url, &data)
-	if err != nil {
-		//return data, err
-		return data, nil
+		// Run worker
+		go worker(ctx, r.httpClient, http.MethodGet, url, chOut)
+
 	}
 
-	//if err := helpers.ParsePayload(response, &statistic); err != nil {
-	//	render.Error(w, err)
-	//	return
-	//}
+	// Read all responses from the channel
+	for range urls {
+		responseData = <-chOut
 
-	//_, body, err := restclient.GetURLDataWithRetries(url)
-	//if err != nil {
-	//	return data, err
-	//}
-	//fmt.Printf("response = %v\n", string(body))
+		// Add received items to the general list
+		if len(responseData.Data) > 0 {
+			dataSet = append(dataSet, responseData.Data...)
+		}
 
-	return data, nil
+	}
+
+	// Return the list of received items
+	return
 }
 
+func worker(ctx context.Context, c *http.Client, method, endpoint string, chOut chan models.ClientResponseData) {
+	resp := models.ClientResponseData{}
+
+	// Init http-connection and do request
+	err := rest.GetWithRetry(ctx, c, method, endpoint, &resp)
+	if err != nil {
+		log.Println(err)
+	}
+
+	// Write http-response into output-channel
+	chOut <- resp
+}

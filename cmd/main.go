@@ -8,7 +8,6 @@ import (
 	rData "github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/repository/data"
 	sData "github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/services/data"
 	"log"
-	"time"
 )
 
 func main() {
@@ -32,7 +31,7 @@ func main() {
 	httpClient := rest.NewHttpClient()
 
 	// Repository instance for /data endpoint
-	dataRepository := rData.NewRepository(httpClient, 60 * time.Second)
+	dataRepository := rData.NewRepository(httpClient)
 
 	// Service instance for /data endpoint
 	dataService := sData.NewDataService(serverCfg.Resources, dataRepository)
@@ -53,17 +52,19 @@ func main() {
 func loadConfig() (models.Config, error) {
 
 	resources := []string{
-		//"https://raw.githubusercontent.com/assignment132/assignment/main/duckduckgo.json",
-		//"https://raw.githubusercontent.com/assignment132/assignment/main/google.json",
-		//"https://raw.githubusercontent.com/assignment132/assignment/main/wikipedia.json",
-		"http://localhost:3000/assignment132/assignment/main/duckduckgo",
-		"http://localhost:3000/assignment132/assignment/main/google",
-		"http://localhost:3000/assignment132/assignment/main/wikipedia",
+		"https://raw.githubusercontent.com/assignment132/assignment/main/duckduckgo.json",
+		"https://raw.githubusercontent.com/assignment132/assignment/main/google.json",
+		"https://raw.githubusercontent.com/assignment132/assignment/main/wikipedia.json",
+		//"http://localhost:3000/assignment132/assignment/main/duckduckgo",
+		//"http://localhost:3000/assignment132/assignment/main/google",
+		//"http://localhost:3000/assignment132/assignment/main/wikipedia",
 	}
 
-
 	serverCfg := models.Config{
+		// Server port to run on it
 		ListenAddr: ":8000",
+
+		// The list of external resources to get data
 		Resources: resources,
 	}
 

@@ -37,7 +37,7 @@ func NewHttpClient() *http.Client {
 	return client
 }
 
-// Rest-client's method to make Get request with context
+// SendGetRequest sends HTTP request
 func SendGetRequest(ctx context.Context, c *http.Client, method, endpoint string, into interface{}) error {
 	//req, err := http.NewRequest(method, endpoint, bytes.NewBuffer([]byte("")))
 	// To make a request with a specified context.Context, use NewRequestWithContext and Client.Do.

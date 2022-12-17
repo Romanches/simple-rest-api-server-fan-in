@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/models"
 	"github.com/gorilla/mux"
+	"log"
 	"net/http"
 )
 
@@ -17,6 +18,7 @@ type ResponseData struct {
 //	RelevanceScore float64 `json:"relevanceScore"`
 //}
 
+// This it not for running tests against. It's for off-line development.
 func main() {
 	r := mux.NewRouter()
 
@@ -27,7 +29,9 @@ func main() {
 
 	http.Handle("/", r)
 
-	http.ListenAndServe(":3000", r)
+	port := ":3000"
+	log.Println("Starting server on ", port)
+	http.ListenAndServe(port, r)
 }
 
 func GetDuckDuckGoAssignment(w http.ResponseWriter, r *http.Request) {
