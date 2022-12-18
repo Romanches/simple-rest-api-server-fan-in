@@ -2,7 +2,7 @@ package data
 
 import (
 	"context"
-	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/helpers/rest"
+	"github.com/Romanches/simple-rest-api-server-fan-in/pkg/rest"
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/models"
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/repository"
 	"log"

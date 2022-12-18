@@ -3,10 +3,10 @@ package main
 import (
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api"
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/handlers"
-	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/helpers/rest"
 	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/models"
 	rData "github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/repository/data"
 	sData "github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/services/data"
+	"github.com/Romanches/simple-rest-api-server-fan-in/pkg/rest"
 	"log"
 )
 

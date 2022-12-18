@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/Romanches/simple-rest-api-server-fan-in/internal/api/v1/helpers/render"
+	"github.com/Romanches/simple-rest-api-server-fan-in/pkg/render"
 	"net/http"
 )
 

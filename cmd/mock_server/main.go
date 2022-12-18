@@ -30,7 +30,7 @@ func main() {
 	http.Handle("/", r)
 
 	port := ":3000"
-	log.Println("Starting server on ", port)
+	log.Println("Starting Mock-server on ", port)
 	http.ListenAndServe(port, r)
 }
 
