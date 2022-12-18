@@ -1,15 +1,23 @@
 # Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
 *.so
 *.dylib
+simple-rest-api-server-fan-in
+go-app
+main
+app
 
 # Test binary, built with `go test -c`
 *.test
 
-# Output of the go coverage tool, specifically when used with LiteIDE
-*.out
+# Os X.
+.DS_Store
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
+# IDE
+.idea/
+.vscode/
+*.out
+tests/
+*.http
+
+# Go
+vendor/
