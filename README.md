@@ -14,7 +14,8 @@ Our application consists of three layers of abstractions:
 ├── cmd
 │   └── main.go
 ├── k8s/
-│   └── deplyment.yaml
+│   ├── deplyment.yaml
+│   └── Dockerfile
 ├── internal/
 │    └── api/
 │       ├── v1/
@@ -45,7 +46,7 @@ Our application consists of three layers of abstractions:
 │       ├── cllient.go
 │       └── retry.go
 ├── .gitignore
-├── Dockerfile
+├── Dockerfile      // For local development
 ├── go.mod
 ├── go.sum
 ├── LICENSE
@@ -53,6 +54,8 @@ Our application consists of three layers of abstractions:
 └── README.md
  
 ```
+
+
 
 ### Available routes
 
@@ -183,14 +186,10 @@ You can type the following command to get the pods in the cluster:
 $ kubectl get pods
 ```
 
-Pods are allocated a private IP address by default and cannot be 
-reached outside of the cluster. You can use the kubectl port-forward 
-command to map a local port to a port inside the pod like this:
+A service is created for exposing the Pods. You can get the list of services in the kubernetes cluster like this:
 ```
-$ kubectl port-forward simple-rest-server-69b45499fb-7fh87 8080:8080
+$ kubectl get services
 ```
-
-
 
 ---
 ## What we can add or improve
